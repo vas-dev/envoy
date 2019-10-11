@@ -1,0 +1,88 @@
+{
+  "name": "@vas-dev/envoy",
+  "version": "0.0.0-development",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "envoy": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "develop": "nodemon index.js",
+    "commit": "git-cz"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "cors": "^2.8.5",
+    "cosmiconfig": "^5.2.1",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
+    "lodash": "^4.17.15",
+    "prettier": "^1.18.2"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "git-cz": "^3.2.1",
+    "husky": "^3.0.8",
+    "nodemon": "^1.19.3",
+    "pretty-quick": "^1.11.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules",
+      "mocks"
+    ],
+    "delay": 1000
+  },
+  "envoy": {
+    "port": 3001,
+    "target": "https://morpheusapi-dev.vas.com",
+    "routesPath": "./routes.js",
+    "fileType": "es6",
+    "saveResponse": true,
+    "responsePath": "./mocks"
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "printWidth": 100
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "commit-msg": "[[ -n $HUSKY_BYPASS ]] || commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "docs/CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  }
+}

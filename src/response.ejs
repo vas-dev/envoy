@@ -1,0 +1,9 @@
+<% if (fileType === 'node') { %>
+  module.exports = <%- body %>
+<% } %>
+
+<% if (fileType === 'es6') { %>
+const response = <%- body %>
+
+export default response
+<% } %>
